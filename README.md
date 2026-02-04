@@ -39,7 +39,6 @@ Conversely, the model achieves near 100% accuracy on the BOMBAY variety.
 Dry-Bean-Classification-KNN/
 ├── dry_bean_classification.ipynb    # Primary notebook with data cleaning, visualization, and model training
 ├── Dry_Bean_Dataset.xlsx            # Original source data
-├── dry_bean_knn_model.pkl           # Final trained and serialized model
 ├── requirements.txt                 # Project dependencies
 └── README.md                        # Project documentation
 ```
