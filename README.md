@@ -8,6 +8,40 @@ This project implements a K-Nearest Neighbors (KNN) classifier to categorize 7 d
 * **The Scaling Factor**: Implemented `StandardScaler` to normalize feature ranges, boosting accuracy from 79.3% to 91.6%.
 * **Reliability**: Validated results using 5-Fold Stratified Cross-Validation, ensuring the model generalizes well with a standard deviation of only 0.0043.
 
+## 🛠️ The Debugging Journey: Challenges & Solutions
+
+During this project, we encountered several "real-world" data problems that required technical troubleshooting. Documenting these is essential for understanding the data pipeline:
+
+### 1. The Renaming Trap (Excel vs. CSV)
+
+* **Problem**: The dataset was labeled as `.csv`, but attempting to load it via `pd.read_csv()` resulted in a `ParserError`.
+* **Discovery**: By inspecting the file header, we discovered the file was actually an Excel XML structure (.xlsx) that had been manually renamed to `.csv`.
+* **Solution**: We used the `openpyxl` engine and `pd.read_excel()` to correctly parse the binary data.
+
+**Code Fix**:
+```python
+# Wrong approach that caused error
+# df = pd.read_csv('Dry_Bean_Dataset.csv')
+
+# Correct approach
+df = pd.read_excel('Dry_Bean_Dataset.xlsx', engine='openpyxl')
+```
+
+### 2. Unicode & Encoding Errors
+
+* **Problem**: Initial attempts to read the text versions of the data triggered a `UnicodeDecodeError`.
+* **Discovery**: The file used Latin-1 encoding rather than the standard UTF-8, causing crashes when encountering special characters.
+* **Solution**: Explicitly defined the encoding as `latin1` in the pandas loading function to ensure data integrity.
+
+**Code Fix**:
+```python
+# Wrong approach that caused error 
+# df = pd.read_csv('data.csv')
+
+# Correct approach
+df = pd.read_csv('data.csv', encoding='latin1')
+```
+
 ## 📊 Performance Analysis: Why the Mispredictions?
 
 While a 91.7% accuracy is excellent, the model occasionally "mispredicts" specific bean varieties. This isn't necessarily a failure of the code, but rather a reflection of the biological data.
